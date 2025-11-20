@@ -34,11 +34,6 @@ in
     			    type = lib.types.listOf lib.types.str;
     			    default = [];
     			};
-				formatter = mkOption {
-				    type = lib.types.package;
-				    # default = pkgs.runCommand "prettier-formatter-empty" {} "mkdir -p $out";
-					readOnly = true;
-				};
 				checks = mkOption {
 				    type = lib.types.package;
 				    # default = pkgs.runCommand "prettier-check-empty" {} "mkdir -p $out";
@@ -51,7 +46,7 @@ in
 				};
 			};
 			config = lib.mkIf cfg.enable {
-                prettier.formatter =
+                formatter =
                     pkgs.writeShellScriptBin "prettier-format" ''
                         cd ${cfg.root}
                         exec ${prettierBin} ${includeArgs} ${ignoreArg} ${extraArgs} --write
